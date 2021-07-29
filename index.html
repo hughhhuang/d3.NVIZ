@@ -1,1 +1,38 @@
-"Hello World" 
+<!DOCTYPE html>
+<html>
+<script src='https://d3js.org/d3.v5.min.js'></script>
+<style> circle {fill: lightblue; stroke: black;} </style>
+<body>
+<svg width=1000 height=1000>
+</svg>
+<script>
+
+var data = d3.csv('C:/Users/Hugh/Downloads/archive/2015.csv')
+
+var margin = 50;
+var height = 800
+
+var x = d3.scaleLinear().domain([0,2]).range([0,800]) 
+var y = d3.scaleLinear().domain([0,10]).range([800,0]) 
+
+d3.select("svg").append("g").attr("transform","translate(" + margin + "," + margin + ")").selectAll("circle")
+    .data(data)
+    .enter()
+    .append("circle")
+      .attr("cx", function (d) { return x(+d.Economy); } )
+      .attr("cy", function (d) { return y(+d['Happiness Score']); } )
+      .attr("r", 10)
+
+
+d3.select("svg").append("g")
+    .attr("transform", "translate(" + margin + "," + margin + ")")
+    .call(d3.axisLeft(y));
+
+d3.select("svg").append("g")
+    .attr("transform", "translate(" + margin + "," + (height + margin) + ")") 
+    .call(d3.axisBottom(x));
+
+
+</script>
+</body>
+</html>
