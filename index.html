@@ -10,7 +10,7 @@
 <button class = "button" id = "2018">2018</button>
 <button class = "button" id = "2019">2019</button>
 
-<svg width=800 height=800>
+<svg width=900 height=900>
 </svg>
 <script>
 
@@ -21,16 +21,18 @@ const data2017 = await d3.csv('https://raw.githubusercontent.com/hughhhuang/hugh
 const data2018 = await d3.csv('https://raw.githubusercontent.com/hughhhuang/hughhhuang.github.io/main/world_happiness_data/2018.csv');
 const data2019 = await d3.csv('https://raw.githubusercontent.com/hughhhuang/hughhhuang.github.io/main/world_happiness_data/2019.csv');
 
-var margin = {top: 30, right: 30, bottom: 30, left: 60},
+var margin = {top: 200, right: 30, bottom: 30, left: 60},
     width = 550,
     height = 550;
 
 
 var svg = d3.select("svg")
 
-var x = d3.scaleLinear().domain([0,2]).range([0,550]) 
+const regions = ['Western Europe', 'North America', 'Australia and New Zealand', 'Middle East and Northern Africa', 'Latin America and Caribbean', 'Southeastern Asia', 'Central and Eastern Europe','Eastern Asia', 'Sub-Saharan Africa']
+
+var x = d3.scaleLinear().domain([0,2.2]).range([0,550]) 
 var y = d3.scaleLinear().domain([0,10]).range([550,0])
-var pcol = d3.scaleOrdinal().domain(['Western Europe', 'North America', 'Australia and New Zealand', 'Middle East and Northern Africa', 'Latin America and Caribbean', 'Southeastern Asia', 'Central and Eastern Europe','Eastern Asia', 'Sub-Saharan Africa'])
+var pcol = d3.scaleOrdinal().domain(regions)
     .range(d3.schemeCategory10)
 
 
@@ -62,12 +64,37 @@ svg.append("g")
     .attr("transform", "translate(" + margin.left + "," + (height + margin.top) + ")") 
     .call(d3.axisBottom(x));
 
+//x-axis label
 svg.append("text")
     .attr("class", "x label")
     .attr("text-anchor", "middle")
     .attr("x", (width/2) + margin.left)
     .attr("y", height + margin.top + 50)
     .text("GDP per capita");
+
+
+//legend dots
+svg.selectAll("dots")
+    .data(regions)
+    .enter()
+    .append("circle")
+        .attr("cx", width + margin.left + margin.right + 10)
+        .attr("cy", function(d,i) {return margin.top + i*25})
+        .attr("r", 10)
+        .style("fill", function(d,i){ return pcol(regions[i])})
+
+//legend text
+svg.selectAll("myLabels")
+    .data(regions)
+    .enter()
+    .append("text")
+        .attr("text-anchor", "left")
+        .attr("x", width + margin.left + margin.right + 30)
+        .attr("y", function(d,i) {return margin.top + i*25})
+        .text(function(d){ return d})
+        .attr("fill", function(d,i){ return pcol(regions[i])})
+        .style("alignment-baseline", "middle")
+
 
 document.getElementById("2015").onclick = function() {disp2015()};
 
