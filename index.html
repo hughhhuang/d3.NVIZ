@@ -175,7 +175,7 @@ svg.append("g").attr("transform","translate(" + margin.left + "," + margin.top +
     
     div.style("opacity", 0.9)
         .style("width", "200px")
-        .style("left",(d3.event.pageX + 1)+"px")
+        .style("left",(d3.event.pageX + 4)+"px")
         .style("top",(d3.event.pageY)+"px")
         .html(d.Country + "<br/> Score: " + parseFloat(d['Happiness Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['Economy (GDP per Capita)']).toFixed(2));
     d3.select(this).moveToFront();
@@ -212,7 +212,7 @@ document.getElementById("2015").onclick = function() {disp2015()};
 function disp2015() {
 
     svg.selectAll("circle").data(data2015)
-    .transition().duration(750)
+    .transition().duration(2000)
     .attr("cx", function (d) { return x(+d['Economy (GDP per Capita)']); } )
     .attr("cy", function (d) { return y(+d['Happiness Score']); } )
     .attr("fill", function (d) { return pcol(d.Region); })
@@ -222,7 +222,7 @@ function disp2015() {
         d3.select(this).moveToFront();
         div.style("opacity", 1)
             .style("width", "200px")
-            .style("left",(d3.event.pageX)+"px")
+            .style("left",(d3.event.pageX + 4)+"px")
             .style("top",(d3.event.pageY)+"px")
             .html(d.Country + "<br/> Score: " + parseFloat(d['Happiness Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['Economy (GDP per Capita)']).toFixed(2));
     })
@@ -233,7 +233,7 @@ document.getElementById("2016").onclick = function() {disp2016()};
 
 function disp2016() {
     svg.selectAll("circle").data(data2016)
-    .transition().duration(750)
+    .transition().duration(2000)
     .attr("cx", function (d) { return x(+d['Economy (GDP per Capita)']); } )
     .attr("cy", function (d) { return y(+d['Happiness Score']); } )
     .attr("fill", function (d) { return pcol(d.Region); })
@@ -243,7 +243,7 @@ function disp2016() {
         d3.select(this).moveToFront();
         div.style("opacity", 1)
             .style("width", "200px")
-            .style("left",(d3.event.pageX)+"px")
+            .style("left",(d3.event.pageX + 4)+"px")
             .style("top",(d3.event.pageY)+"px")
             .html(d.Country + "<br/> Score: " + parseFloat(d['Happiness Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['Economy (GDP per Capita)']).toFixed(2));
     })
@@ -255,7 +255,7 @@ document.getElementById("2017").onclick = function() {disp2017()};
 
 function disp2017() {
     svg.selectAll("circle").data(data2017)
-    .transition().duration(750)
+    .transition().duration(2000)
     .attr("cx", function (d) { return x(+d['Economy..GDP.per.Capita.']); } )
     .attr("cy", function (d) { return y(+d['Happiness.Score']); } )
     .attr("fill", function (d) { return pcol(d.Region); })
@@ -265,7 +265,7 @@ function disp2017() {
         d3.select(this).moveToFront();
         div.style("opacity", 1)
             .style("width", "200px")
-            .style("left",(d3.event.pageX)+"px")
+            .style("left",(d3.event.pageX + 4)+"px")
             .style("top",(d3.event.pageY)+"px")
             .html(d.Country + "<br/> Score: " + parseFloat(d['Happiness.Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['Economy..GDP.per.Capita.']).toFixed(2));
     })
@@ -278,7 +278,7 @@ document.getElementById("2018").onclick = function() {disp2018()};
 function disp2018() {
 
     svg.selectAll("circle").data(data2018)
-    .transition().duration(750)
+    .transition().duration(2000)
     .attr("cx", function (d) { return x(+d['GDP per capita']); } )
     .attr("cy", function (d) { return y(+d['Score']); } )
     .attr("fill", function (d) { return pcol(d.Region); })
@@ -288,7 +288,7 @@ function disp2018() {
         d3.select(this).moveToFront();
         div.style("opacity", 1)
             .style("width", "200px")
-            .style("left",(d3.event.pageX)+"px")
+            .style("left",(d3.event.pageX + 4)+"px")
             .style("top",(d3.event.pageY)+"px")
             .html(d['Country or region'] + "<br/> Score: " + parseFloat(d['Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['GDP per capita']).toFixed(2));
     })
@@ -300,7 +300,7 @@ document.getElementById("2019").onclick = function() {disp2019()};
 
 function disp2019() {
     svg.selectAll("circle").data(data2019)
-    .transition().duration(750)
+    .transition().duration(2000)
     .attr("cx", function (d) { return x(+d['GDP per capita']); } )
     .attr("cy", function (d) { return y(+d['Score']); } )
     .attr("fill", function (d) { return pcol(d.Region); })
@@ -310,7 +310,7 @@ function disp2019() {
         d3.select(this).moveToFront();
         div.style("opacity", 1)
             .style("width", "200px")
-            .style("left",(d3.event.pageX)+"px")
+            .style("left",(d3.event.pageX + 4)+"px")
             .style("top",(d3.event.pageY)+"px")
             .html(d['Country or region'] + "<br/> Score: " + parseFloat(d['Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['GDP per capita']).toFixed(2));
     })
