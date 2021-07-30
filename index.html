@@ -3,6 +3,14 @@
     
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <style> 
+#tooltip {
+    opacity: 0;
+    position: absolute;
+    text-align: center;
+    width: 60px; height: 40px;
+    background: white;
+    border: 1px;
+}
     circle{stroke: black;} 
     .button {  
         padding: 15px 20px;
@@ -59,8 +67,10 @@
 <button class = "button button4" id = "2018">2018</button>
 <button class = "button button5" id = "2019">2019</button>
 
-<svg width=1000 height=900>
+<svg width=1500 height=900>
 </svg>
+<div id="tooltip"></div>
+
 <script>
 
 async function init() {
@@ -71,15 +81,17 @@ const data2018 = await d3.csv('https://raw.githubusercontent.com/hughhhuang/hugh
 const data2019 = await d3.csv('https://raw.githubusercontent.com/hughhhuang/hughhhuang.github.io/main/world_happiness_data/2019.csv');
 
 var margin = {top: 100, right: 30, bottom: 30, left: 60},
-    width = 600,
+    width = 800,
     height = 600;
 
 
 var svg = d3.select("svg")
 
+var tooltip = d3.select("#tooltip");
+
 const regions = ['Western Europe', 'North America', 'Australia and New Zealand', 'Middle East and Northern Africa', 'Latin America and Caribbean', 'Southeastern Asia', 'Central and Eastern Europe','Eastern Asia', 'Sub-Saharan Africa']
 
-var x = d3.scaleLinear().domain([0,2.15]).range([0,600]) 
+var x = d3.scaleLinear().domain([0,2.15]).range([0,800]) 
 var y = d3.scaleLinear().domain([0,10]).range([600,0])
 var pcol = d3.scaleOrdinal().domain(regions)
     .range(d3.schemeCategory10)
@@ -89,20 +101,6 @@ d3.selection.prototype.moveToFront = function() {
     this.parentNode.appendChild(this);
   });
 };
-
-svg.append("g").attr("transform","translate(" + margin.left + "," + margin.top + ")").selectAll("circle")
-    .data(data2015)
-    .enter()
-    .append("circle")
-      .attr("cx", function (d) { return x(+d['Economy (GDP per Capita)']); } )
-      .attr("cy", function (d) { return y(+d['Happiness Score']); } )
-      .attr("r", 7)
-      .attr("fill", function (d) { return pcol(d.Region); })
-      .on('mouseover', function(d) {
-        d3.select(this).moveToFront();
-       })
-
-
 
 svg.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
@@ -128,6 +126,23 @@ svg.append("text")
     .attr("x", (width/2) + margin.left)
     .attr("y", height + margin.top + 50)
     .text("GDP per capita");
+
+svg.append("g").attr("transform","translate(" + margin.left + "," + margin.top + ")").selectAll("circle")
+.data(data2015)
+.enter()
+.append("circle")
+    .attr("cx", function (d) { return x(+d['Economy (GDP per Capita)']); } )
+    .attr("cy", function (d) { return y(+d['Happiness Score']); } )
+    .attr("r", 7)
+    .attr("fill", function (d) { return pcol(d.Region); })
+    .on('mouseover', function(d) {
+    d3.select(this).moveToFront();
+    tooltip.style("opacity", 1)
+            .style("left",(d3.event.pageX)+"px")
+            .style("top",(d3.event.pageY)+"px")
+            .html(d.Country);
+    })
+    .on("mouseout", function() { tooltip.style("opacity", 0) })
 
 
 //legend dots
@@ -176,7 +191,12 @@ function disp2015() {
       .attr("fill", function (d) { return pcol(d.Region); })
       .on('mouseover', function(d) {
         d3.select(this).moveToFront();
-       })
+        tooltip.style("opacity", 1)
+                .style("left",(d3.event.pageX)+"px")
+                .style("top",(d3.event.pageY)+"px")
+                .html(d.Country);
+        })
+        .on("mouseout", function() { tooltip.style("opacity", 0) })
     
     //legend dots
     svg.selectAll("dots")
@@ -212,7 +232,12 @@ function disp2016() {
       .attr("fill", function (d) { return pcol(d.Region); })
       .on('mouseover', function(d) {
         d3.select(this).moveToFront();
-       })
+        tooltip.style("opacity", 1)
+                .style("left",(d3.event.pageX)+"px")
+                .style("top",(d3.event.pageY)+"px")
+                .html(d.Country);
+        })
+        .on("mouseout", function() { tooltip.style("opacity", 0) })
 
     //legend dots
     svg.selectAll("dots")
@@ -248,7 +273,12 @@ function disp2017() {
       .attr("fill", function (d) { return pcol(d.Region); })
       .on('mouseover', function(d) {
         d3.select(this).moveToFront();
-       })
+        tooltip.style("opacity", 1)
+                .style("left",(d3.event.pageX)+"px")
+                .style("top",(d3.event.pageY)+"px")
+                .html(d.Country);
+        })
+        .on("mouseout", function() { tooltip.style("opacity", 0) })
 
     //legend dots
     svg.selectAll("dots")
@@ -284,7 +314,12 @@ function disp2018() {
       .attr("fill", function (d) { return pcol(d.Region); })
       .on('mouseover', function(d) {
         d3.select(this).moveToFront();
-       })
+        tooltip.style("opacity", 1)
+                .style("left",(d3.event.pageX)+"px")
+                .style("top",(d3.event.pageY)+"px")
+                .html(d.Country);
+        })
+        .on("mouseout", function() { tooltip.style("opacity", 0) })
 
     //legend dots
     svg.selectAll("dots")
@@ -320,7 +355,12 @@ function disp2019() {
       .attr("fill", function (d) { return pcol(d.Region); })
       .on('mouseover', function(d) {
         d3.select(this).moveToFront();
-       })
+        tooltip.style("opacity", 1)
+                .style("left",(d3.event.pageX)+"px")
+                .style("top",(d3.event.pageY)+"px")
+                .html(d.Country);
+        })
+        .on("mouseout", function() { tooltip.style("opacity", 0) })
 
     //legend dots
     svg.selectAll("dots")
