@@ -1,16 +1,58 @@
 <!DOCTYPE html>
 <html>
+    <div class="header">
+        <h1>World Happiness Report 2015 - 2019</h1>
+        <p>The World Happiness Report is a landmark survey of the state of global happiness. 
+            The report ranks 155 countries by their happiness levels. The happiness scores and rankings use data from the Gallup World Poll.
+            The scores are based on answers to the main life evaluation question asked in the poll. 
+            This question, known as the Cantril ladder, asks respondents to think of a ladder with the 
+            best possible life for them being a 10 and the worst possible life being a 0 and to rate their 
+            own current lives on that scale. The columns following the happiness score estimate the extent to 
+            which each of six factors – economic production, social support, life expectancy, freedom, 
+            absence of corruption, and generosity – contribute to making life evaluations. They have no 
+            impact on the total score reported for each country, but they may explain why some countries rank higher than others.</p>
+    </div>
+    
 <script src='https://d3js.org/d3.v5.min.js'></script>
-<style> circle{stroke: black;} </style>
+<style> 
+    circle{stroke: black;} 
+    .button {  
+        padding: 15px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        position: absolute;
+        left: 100px;
+    }
+    .button2 {
+        position: absolute;
+        left: 200px;
+    }
+    .button3 {
+        position: absolute;
+        left: 300px;
+    }
+    .button4 {
+        position: absolute;
+        left: 400px;
+    }
+    .button5 {
+        position: absolute;
+        left: 500px;
+    }
+</style>
 <body onload='init()'>
 
 <button class = "button" id = "2015">2015</button>
-<button class = "button" id = "2016">2016</button>
-<button class = "button" id = "2017">2017</button>
-<button class = "button" id = "2018">2018</button>
-<button class = "button" id = "2019">2019</button>
+<button class = "button button2" id = "2016">2016</button>
+<button class = "button button3" id = "2017">2017</button>
+<button class = "button button4" id = "2018">2018</button>
+<button class = "button button5" id = "2019">2019</button>
 
-<svg width=900 height=900>
+<svg width=1000 height=900>
 </svg>
 <script>
 
@@ -21,20 +63,25 @@ const data2017 = await d3.csv('https://raw.githubusercontent.com/hughhhuang/hugh
 const data2018 = await d3.csv('https://raw.githubusercontent.com/hughhhuang/hughhhuang.github.io/main/world_happiness_data/2018.csv');
 const data2019 = await d3.csv('https://raw.githubusercontent.com/hughhhuang/hughhhuang.github.io/main/world_happiness_data/2019.csv');
 
-var margin = {top: 200, right: 30, bottom: 30, left: 60},
-    width = 550,
-    height = 550;
+var margin = {top: 100, right: 30, bottom: 30, left: 60},
+    width = 600,
+    height = 600;
 
 
 var svg = d3.select("svg")
 
 const regions = ['Western Europe', 'North America', 'Australia and New Zealand', 'Middle East and Northern Africa', 'Latin America and Caribbean', 'Southeastern Asia', 'Central and Eastern Europe','Eastern Asia', 'Sub-Saharan Africa']
 
-var x = d3.scaleLinear().domain([0,2.2]).range([0,550]) 
-var y = d3.scaleLinear().domain([0,10]).range([550,0])
+var x = d3.scaleLinear().domain([0,2.15]).range([0,600]) 
+var y = d3.scaleLinear().domain([0,10]).range([600,0])
 var pcol = d3.scaleOrdinal().domain(regions)
     .range(d3.schemeCategory10)
 
+d3.selection.prototype.moveToFront = function() {
+  return this.each(function(){
+    this.parentNode.appendChild(this);
+  });
+};
 
 svg.append("g").attr("transform","translate(" + margin.left + "," + margin.top + ")").selectAll("circle")
     .data(data2015)
@@ -42,8 +89,11 @@ svg.append("g").attr("transform","translate(" + margin.left + "," + margin.top +
     .append("circle")
       .attr("cx", function (d) { return x(+d['Economy (GDP per Capita)']); } )
       .attr("cy", function (d) { return y(+d['Happiness Score']); } )
-      .attr("r", 10)
+      .attr("r", 7)
       .attr("fill", function (d) { return pcol(d.Region); })
+      .on('mouseover', function(d) {
+        d3.select(this).moveToFront();
+       })
 
 
 
@@ -55,7 +105,7 @@ svg.append("text")
     .attr("class", "y label")
     .attr("text-anchor", "middle")
     .attr("y", 6)
-    .attr("x", -(height / 2))
+    .attr("x", -(height / 2) - margin.top)
     .attr("dy", ".75em")
     .attr("transform", "rotate(-90)")
     .text("Happiness Score");
@@ -80,7 +130,7 @@ svg.selectAll("dots")
     .append("circle")
         .attr("cx", width + margin.left + margin.right + 10)
         .attr("cy", function(d,i) {return margin.top + i*25})
-        .attr("r", 10)
+        .attr("r", 7)
         .style("fill", function(d,i){ return pcol(regions[i])})
 
 //legend text
@@ -89,7 +139,7 @@ svg.selectAll("myLabels")
     .enter()
     .append("text")
         .attr("text-anchor", "left")
-        .attr("x", width + margin.left + margin.right + 30)
+        .attr("x", width + margin.left + margin.right + 25)
         .attr("y", function(d,i) {return margin.top + i*25})
         .text(function(d){ return d})
         .attr("fill", function(d,i){ return pcol(regions[i])})
@@ -115,8 +165,21 @@ function disp2015() {
     .append("circle")
       .attr("cx", function (d) { return x(+d['Economy (GDP per Capita)']); } )
       .attr("cy", function (d) { return y(+d['Happiness Score']); } )
-      .attr("r", 10)
+      .attr("r", 7)
       .attr("fill", function (d) { return pcol(d.Region); })
+      .on('mouseover', function(d) {
+        d3.select(this).moveToFront();
+       })
+    
+    //legend dots
+    svg.selectAll("dots")
+    .data(regions)
+    .enter()
+    .append("circle")
+        .attr("cx", width + margin.left + margin.right + 10)
+        .attr("cy", function(d,i) {return margin.top + i*25})
+        .attr("r", 7)
+        .style("fill", function(d,i){ return pcol(regions[i])})
 }
 
 document.getElementById("2016").onclick = function() {disp2016()};
@@ -138,8 +201,21 @@ function disp2016() {
     .append("circle")
       .attr("cx", function (d) { return x(+d['Economy (GDP per Capita)']); } )
       .attr("cy", function (d) { return y(+d['Happiness Score']); } )
-      .attr("r", 10)
+      .attr("r", 7)
       .attr("fill", function (d) { return pcol(d.Region); })
+      .on('mouseover', function(d) {
+        d3.select(this).moveToFront();
+       })
+
+    //legend dots
+    svg.selectAll("dots")
+    .data(regions)
+    .enter()
+    .append("circle")
+        .attr("cx", width + margin.left + margin.right + 10)
+        .attr("cy", function(d,i) {return margin.top + i*25})
+        .attr("r", 7)
+        .style("fill", function(d,i){ return pcol(regions[i])})
 }
 
 document.getElementById("2017").onclick = function() {disp2017()};
@@ -161,8 +237,21 @@ function disp2017() {
     .append("circle")
       .attr("cx", function (d) { return x(+d['Economy..GDP.per.Capita.']); } )
       .attr("cy", function (d) { return y(+d['Happiness.Score']); } )
-      .attr("r", 10)
+      .attr("r", 7)
       .attr("fill", function (d) { return pcol(d.Region); })
+      .on('mouseover', function(d) {
+        d3.select(this).moveToFront();
+       })
+
+    //legend dots
+    svg.selectAll("dots")
+    .data(regions)
+    .enter()
+    .append("circle")
+        .attr("cx", width + margin.left + margin.right + 10)
+        .attr("cy", function(d,i) {return margin.top + i*25})
+        .attr("r", 7)
+        .style("fill", function(d,i){ return pcol(regions[i])})
 }
 
 document.getElementById("2018").onclick = function() {disp2018()};
@@ -184,8 +273,21 @@ function disp2018() {
     .append("circle")
       .attr("cx", function (d) { return x(+d['GDP per capita']); } )
       .attr("cy", function (d) { return y(+d['Score']); } )
-      .attr("r", 10)
+      .attr("r", 7)
       .attr("fill", function (d) { return pcol(d.Region); })
+      .on('mouseover', function(d) {
+        d3.select(this).moveToFront();
+       })
+
+    //legend dots
+    svg.selectAll("dots")
+    .data(regions)
+    .enter()
+    .append("circle")
+        .attr("cx", width + margin.left + margin.right + 10)
+        .attr("cy", function(d,i) {return margin.top + i*25})
+        .attr("r", 7)
+        .style("fill", function(d,i){ return pcol(regions[i])})
 }
 
 document.getElementById("2019").onclick = function() {disp2019()};
@@ -207,8 +309,21 @@ function disp2019() {
     .append("circle")
       .attr("cx", function (d) { return x(+d['GDP per capita']); } )
       .attr("cy", function (d) { return y(+d['Score']); } )
-      .attr("r", 10)
+      .attr("r", 7)
       .attr("fill", function (d) { return pcol(d.Region); })
+      .on('mouseover', function(d) {
+        d3.select(this).moveToFront();
+       })
+
+    //legend dots
+    svg.selectAll("dots")
+    .data(regions)
+    .enter()
+    .append("circle")
+        .attr("cx", width + margin.left + margin.right + 10)
+        .attr("cy", function(d,i) {return margin.top + i*25})
+        .attr("r", 7)
+        .style("fill", function(d,i){ return pcol(regions[i])})
 }
 
 
