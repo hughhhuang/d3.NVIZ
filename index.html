@@ -1,17 +1,5 @@
 <!DOCTYPE html>
 <html>
-    <div class="header">
-        <h1>World Happiness Report 2015 - 2019</h1>
-        <p>The World Happiness Report is a landmark survey of the state of global happiness. 
-            The report ranks 155 countries by their happiness levels. The happiness scores and rankings use data from the Gallup World Poll.
-            The scores are based on answers to the main life evaluation question asked in the poll. 
-            This question, known as the Cantril ladder, asks respondents to think of a ladder with the 
-            best possible life for them being a 10 and the worst possible life being a 0 and to rate their 
-            own current lives on that scale. The columns following the happiness score estimate the extent to 
-            which each of six factors – economic production, social support, life expectancy, freedom, 
-            absence of corruption, and generosity – contribute to making life evaluations. They have no 
-            impact on the total score reported for each country, but they may explain why some countries rank higher than others.</p>
-    </div>
     
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <style> 
@@ -43,8 +31,27 @@
         position: absolute;
         left: 500px;
     }
+
+    .header {
+        padding: 20px;
+        text-align: center;
+        font-size: 20px;
+    }
 </style>
 <body onload='init()'>
+
+<div class="header">
+        <h1>World Happiness Report 2015 - 2019</h1>
+        <p>The World Happiness Report is a landmark survey of the state of global happiness. 
+            The report ranks 155 countries by their happiness levels. The happiness scores and rankings use data from the Gallup World Poll.
+            The scores are based on answers to the main life evaluation question asked in the poll. 
+            This question, known as the Cantril ladder, asks respondents to think of a ladder with the 
+            best possible life for them being a 10 and the worst possible life being a 0 and to rate their 
+            own current lives on that scale. The columns following the happiness score estimate the extent to 
+            which each of six factors – economic production, social support, life expectancy, freedom, 
+            absence of corruption, and generosity – contribute to making life evaluations. They have no 
+            impact on the total score reported for each country, but they may explain why some countries rank higher than others.</p>
+</div>
 
 <button class = "button" id = "2015">2015</button>
 <button class = "button button2" id = "2016">2016</button>
