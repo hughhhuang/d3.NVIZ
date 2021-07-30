@@ -8,7 +8,7 @@
 <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
 
 <style> 
-#tooltip {
+div.tooltip {
     opacity: 0;
     position: absolute;
     text-align: center;
@@ -76,7 +76,6 @@
 
 <svg width=1500 height=1000>
 </svg>
-<div id="tooltip"></div>
 
 <script>
 
@@ -110,7 +109,9 @@ var margin = {top: 100, right: 30, bottom: 30, left: 60},
 
 var svg = d3.select("svg")
 
-var tooltip = d3.select("#tooltip");
+var div = d3.select("body").append("div")	
+    .attr("class", "tooltip")				
+    .style("opacity", 0);
 
 const regions = ['Western Europe', 'North America', 'Australia and New Zealand', 'Middle East and Northern Africa', 'Latin America and Caribbean', 'Southeastern Asia', 'Central and Eastern Europe','Eastern Asia', 'Sub-Saharan Africa']
 
@@ -168,13 +169,14 @@ svg.append("g").attr("transform","translate(" + margin.left + "," + margin.top +
     .attr("r", 7)
     .attr("fill", function (d) { return pcol(d.Region); })
     .on('mouseover', function(d) {
-    d3.select(this).moveToFront();
-    tooltip.style("opacity", 1)
-            .style("left",(d3.event.pageX)+"px")
-            .style("top",(d3.event.pageY)+"px")
-            .html(d.Country + "<br/> Score: " + parseFloat(d['Happiness Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['Economy (GDP per Capita)']).toFixed(2));
+    //d3.select(this).moveToFront();
+    div.style("opacity", 0.9)
+        .style("width", "200px")
+        .style("left",(d3.event.pageX + 1)+"px")
+        .style("top",(d3.event.pageY)+"px")
+        .html(d.Country + "<br/> Score: " + parseFloat(d['Happiness Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['Economy (GDP per Capita)']).toFixed(2));
     })
-    .on("mouseout", function() { tooltip.style("opacity", 0).moveToBack() })
+    .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
 
 svg.append("g").call(makeAnnotations)
 
@@ -224,12 +226,13 @@ function disp2015() {
       .attr("fill", function (d) { return pcol(d.Region); })
       .on('mouseover', function(d) {
         d3.select(this).moveToFront();
-        tooltip.style("opacity", 1)
-                .style("left",(d3.event.pageX)+"px")
-                .style("top",(d3.event.pageY)+"px")
-                .html(d.Country + "<br/> Score: " + parseFloat(d['Happiness Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['Economy (GDP per Capita)']).toFixed(2));
+        div.style("opacity", 1)
+            .style("width", "200px")
+            .style("left",(d3.event.pageX)+"px")
+            .style("top",(d3.event.pageY)+"px")
+            .html(d.Country + "<br/> Score: " + parseFloat(d['Happiness Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['Economy (GDP per Capita)']).toFixed(2));
         })
-        .on("mouseout", function() { tooltip.style("opacity", 0) })
+        .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
     
     //legend dots
     svg.selectAll("dots")
@@ -265,12 +268,13 @@ function disp2016() {
       .attr("fill", function (d) { return pcol(d.Region); })
       .on('mouseover', function(d) {
         d3.select(this).moveToFront();
-        tooltip.style("opacity", 1)
-                .style("left",(d3.event.pageX)+"px")
-                .style("top",(d3.event.pageY)+"px")
-                .html(d.Country + "<br/> Score: " + parseFloat(d['Happiness Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['Economy (GDP per Capita)']).toFixed(2));
+        div.style("opacity", 1)
+            .style("width", "200px")
+            .style("left",(d3.event.pageX)+"px")
+            .style("top",(d3.event.pageY)+"px")
+            .html(d.Country + "<br/> Score: " + parseFloat(d['Happiness Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['Economy (GDP per Capita)']).toFixed(2));
         })
-        .on("mouseout", function() { tooltip.style("opacity", 0) })
+        .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
 
     //legend dots
     svg.selectAll("dots")
@@ -306,12 +310,13 @@ function disp2017() {
       .attr("fill", function (d) { return pcol(d.Region); })
       .on('mouseover', function(d) {
         d3.select(this).moveToFront();
-        tooltip.style("opacity", 1)
-                .style("left",(d3.event.pageX)+"px")
-                .style("top",(d3.event.pageY)+"px")
-                .html(d.Country + "<br/> Score: " + parseFloat(d['Happiness Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['Economy (GDP per Capita)']).toFixed(2));
+        div.style("opacity", 1)
+            .style("width", "200px")
+            .style("left",(d3.event.pageX)+"px")
+            .style("top",(d3.event.pageY)+"px")
+            .html(d.Country + "<br/> Score: " + parseFloat(d['Happiness.Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['Economy..GDP.per.Capita.']).toFixed(2));
         })
-        .on("mouseout", function() { tooltip.style("opacity", 0) })
+        .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
 
     //legend dots
     svg.selectAll("dots")
@@ -347,12 +352,13 @@ function disp2018() {
       .attr("fill", function (d) { return pcol(d.Region); })
       .on('mouseover', function(d) {
         d3.select(this).moveToFront();
-        tooltip.style("opacity", 1)
-                .style("left",(d3.event.pageX)+"px")
-                .style("top",(d3.event.pageY)+"px")
-                .html(d.Country + "<br/> Score: " + parseFloat(d['Happiness Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['Economy (GDP per Capita)']).toFixed(2));
+        div.style("opacity", 1)
+            .style("width", "200px")
+            .style("left",(d3.event.pageX)+"px")
+            .style("top",(d3.event.pageY)+"px")
+            .html(d.Country + "<br/> Score: " + parseFloat(d['Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['GDP per capita']).toFixed(2));
         })
-        .on("mouseout", function() { tooltip.style("opacity", 0) })
+        .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
 
     //legend dots
     svg.selectAll("dots")
@@ -388,12 +394,13 @@ function disp2019() {
       .attr("fill", function (d) { return pcol(d.Region); })
       .on('mouseover', function(d) {
         d3.select(this).moveToFront();
-        tooltip.style("opacity", 1)
-                .style("left",(d3.event.pageX)+"px")
-                .style("top",(d3.event.pageY)+"px")
-                .html(d.Country + "<br/> Score: " + parseFloat(d['Happiness Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['Economy (GDP per Capita)']).toFixed(2));
+        div.style("opacity", 1)
+            .style("width", "200px")
+            .style("left",(d3.event.pageX)+"px")
+            .style("top",(d3.event.pageY)+"px")
+            .html(d.Country + "<br/> Score: " + parseFloat(d['Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['GDP per capita']).toFixed(2));
         })
-        .on("mouseout", function() { tooltip.style("opacity", 0) })
+        .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
 
     //legend dots
     svg.selectAll("dots")
