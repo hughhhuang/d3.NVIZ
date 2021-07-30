@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html>
-    
+
+<!-- Load d3.js -->    
 <script src='https://d3js.org/d3.v5.min.js'></script>
+
+<!-- Load d3-annotation -->
+<script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
+
 <style> 
 #tooltip {
     opacity: 0;
     position: absolute;
     text-align: center;
-    width: 60px; height: 40px;
-    background: white;
+    width: 200px; height: 60px;
+    background: lightsteelblue;
     border: 1px;
+    border-radius: 3px;
+    padding: 2px;
 }
     circle{stroke: black;} 
     .button {  
@@ -67,7 +74,7 @@
 <button class = "button button4" id = "2018">2018</button>
 <button class = "button button5" id = "2019">2019</button>
 
-<svg width=1500 height=900>
+<svg width=1500 height=1000>
 </svg>
 <div id="tooltip"></div>
 
@@ -80,9 +87,25 @@ const data2017 = await d3.csv('https://raw.githubusercontent.com/hughhhuang/hugh
 const data2018 = await d3.csv('https://raw.githubusercontent.com/hughhhuang/hughhhuang.github.io/main/world_happiness_data/2018.csv');
 const data2019 = await d3.csv('https://raw.githubusercontent.com/hughhhuang/hughhhuang.github.io/main/world_happiness_data/2019.csv');
 
+const annotations = [
+  {
+    note: {
+      label: "Here is the annotation label",
+      title: "Annotation title"
+    },
+    x: 100,
+    y: 100,
+    dy: 100,
+    dx: 100
+  }
+]
+
+const makeAnnotations = d3.annotation()
+  .annotations(annotations)
+
 var margin = {top: 100, right: 30, bottom: 30, left: 60},
     width = 800,
-    height = 600;
+    height = 800;
 
 
 var svg = d3.select("svg")
@@ -92,7 +115,7 @@ var tooltip = d3.select("#tooltip");
 const regions = ['Western Europe', 'North America', 'Australia and New Zealand', 'Middle East and Northern Africa', 'Latin America and Caribbean', 'Southeastern Asia', 'Central and Eastern Europe','Eastern Asia', 'Sub-Saharan Africa']
 
 var x = d3.scaleLinear().domain([0,2.15]).range([0,800]) 
-var y = d3.scaleLinear().domain([0,10]).range([600,0])
+var y = d3.scaleLinear().domain([1,9]).range([800,0])
 var pcol = d3.scaleOrdinal().domain(regions)
     .range(d3.schemeCategory10)
 
@@ -100,6 +123,15 @@ d3.selection.prototype.moveToFront = function() {
   return this.each(function(){
     this.parentNode.appendChild(this);
   });
+};
+
+d3.selection.prototype.moveToBack = function() {
+    return this.each(function() {
+        var firstChild = this.parentNode.firstChild;
+        if (firstChild) {
+            this.parentNode.insertBefore(this, firstChild);
+        }
+    });
 };
 
 svg.append("g")
@@ -140,10 +172,11 @@ svg.append("g").attr("transform","translate(" + margin.left + "," + margin.top +
     tooltip.style("opacity", 1)
             .style("left",(d3.event.pageX)+"px")
             .style("top",(d3.event.pageY)+"px")
-            .html(d.Country);
+            .html(d.Country + "<br/> Score: " + parseFloat(d['Happiness Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['Economy (GDP per Capita)']).toFixed(2));
     })
-    .on("mouseout", function() { tooltip.style("opacity", 0) })
+    .on("mouseout", function() { tooltip.style("opacity", 0).moveToBack() })
 
+svg.append("g").call(makeAnnotations)
 
 //legend dots
 svg.selectAll("dots")
@@ -194,7 +227,7 @@ function disp2015() {
         tooltip.style("opacity", 1)
                 .style("left",(d3.event.pageX)+"px")
                 .style("top",(d3.event.pageY)+"px")
-                .html(d.Country);
+                .html(d.Country + "<br/> Score: " + parseFloat(d['Happiness Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['Economy (GDP per Capita)']).toFixed(2));
         })
         .on("mouseout", function() { tooltip.style("opacity", 0) })
     
@@ -235,7 +268,7 @@ function disp2016() {
         tooltip.style("opacity", 1)
                 .style("left",(d3.event.pageX)+"px")
                 .style("top",(d3.event.pageY)+"px")
-                .html(d.Country);
+                .html(d.Country + "<br/> Score: " + parseFloat(d['Happiness Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['Economy (GDP per Capita)']).toFixed(2));
         })
         .on("mouseout", function() { tooltip.style("opacity", 0) })
 
@@ -276,7 +309,7 @@ function disp2017() {
         tooltip.style("opacity", 1)
                 .style("left",(d3.event.pageX)+"px")
                 .style("top",(d3.event.pageY)+"px")
-                .html(d.Country);
+                .html(d.Country + "<br/> Score: " + parseFloat(d['Happiness Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['Economy (GDP per Capita)']).toFixed(2));
         })
         .on("mouseout", function() { tooltip.style("opacity", 0) })
 
@@ -317,7 +350,7 @@ function disp2018() {
         tooltip.style("opacity", 1)
                 .style("left",(d3.event.pageX)+"px")
                 .style("top",(d3.event.pageY)+"px")
-                .html(d.Country);
+                .html(d.Country + "<br/> Score: " + parseFloat(d['Happiness Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['Economy (GDP per Capita)']).toFixed(2));
         })
         .on("mouseout", function() { tooltip.style("opacity", 0) })
 
@@ -358,7 +391,7 @@ function disp2019() {
         tooltip.style("opacity", 1)
                 .style("left",(d3.event.pageX)+"px")
                 .style("top",(d3.event.pageY)+"px")
-                .html(d.Country);
+                .html(d.Country + "<br/> Score: " + parseFloat(d['Happiness Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['Economy (GDP per Capita)']).toFixed(2));
         })
         .on("mouseout", function() { tooltip.style("opacity", 0) })
 
