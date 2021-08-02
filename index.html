@@ -36,28 +36,28 @@ div.tooltip {
     }
     .button2 {
         position: absolute;
-        left: 200px;
+        left: 175px;
     }
     .button3 {
         position: absolute;
-        left: 300px;
+        left: 250px;
     }
     .button4 {
         position: absolute;
-        left: 400px;
+        left: 325px;
     }
     .button5 {
         position: absolute;
-        left: 500px;
+        left: 400px;
     }
     .button6 {
         position: absolute;
-        left: 600px;
+        left: 475px;
     }
 
     .button7 {
         position: absolute;
-        left: 700px;
+        left: 550px;
     }
 
     .header {
@@ -103,7 +103,12 @@ const data2018 = await d3.csv('https://raw.githubusercontent.com/hughhhuang/hugh
 const data2019 = await d3.csv('https://raw.githubusercontent.com/hughhhuang/hughhhuang.github.io/main/world_happiness_data/2019.csv');
 
 var year = 2015;
+
 document.getElementById("2015").style.background = "#9df5f0";
+document.getElementById("Next").style.color = "#242536";
+document.getElementById("Next").style.background = "#f5f5d5";
+document.getElementById("Prev").style.color = "#242536";
+document.getElementById("Prev").style.background = "#f5f5d5";
 
 const annotations = [
   {
@@ -227,7 +232,7 @@ document.getElementById("2015").onclick = function() {disp2015()};
 
 function disp2015() {
     year = 2015;
-    
+
     document.getElementById("2015").style.background = "#9df5f0";
     document.getElementById("2016").style.background = "whitesmoke";
     document.getElementById("2017").style.background = "whitesmoke";
