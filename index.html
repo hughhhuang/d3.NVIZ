@@ -110,7 +110,7 @@ document.getElementById("Next").style.background = "#f5f5d5";
 document.getElementById("Prev").style.color = "#242536";
 document.getElementById("Prev").style.background = "#f5f5d5";
 
-const annotations = [
+const annotations2015 = [
   {
     note: {
       label: "There is a clear positive correlation between Happiness Score and GDP per capita",
@@ -123,10 +123,74 @@ const annotations = [
   }
 ]
 
+const makeAnnotations2015 = d3.annotation()
+  .annotations(annotations2015)
+
+const annotations2016 = [
+  {
+    note: {
+      label: "Countries in Sub-Saharan Africa, Southeastern Asia, and Southern Asia consistently have lower GDP per capita and lower Happiness Scores than other regions",
+      //title: "Annotation title"
+    },
+    x: 300,
+    y: 600,
+    dy: 100,
+    dx: 100
+  }
+]
+
+const makeAnnotations2016 = d3.annotation()
+  .annotations(annotations2016);
 
 
-const makeAnnotations = d3.annotation()
-  .annotations(annotations)
+const annotations2017 = [
+  {
+    note: {
+      label: "In the middle are Latin America and the Caribbean, Central and Eastern Europe, and some countries from the Middle East and North Africa",
+      //title: "Annotation title"
+    },
+    x: 470,
+    y: 470,
+    dy: 100,
+    dx: 100
+  }
+]
+
+const makeAnnotations2017 = d3.annotation()
+  .annotations(annotations2017)
+
+const annotations2018 = [
+  {
+    note: {
+      label: "At the top are Western Europe, North America, Australia and New Zealand, and Eastern Asian countries.",
+      //title: "Annotation title"
+    },
+    x: 600,
+    y: 320,
+    dy: 120,
+    dx: 120
+  }
+]
+
+const makeAnnotations2018 = d3.annotation()
+  .annotations(annotations2018)
+
+const annotations2019 = [
+  {
+    note: {
+      label: "From 2015 to 2019, the distribution of regions across this plot stays relatively the same",
+      //title: "Annotation title"
+    },
+    x: 570,
+    y: 570,
+    dy: 100,
+    dx: 100
+  }
+]
+
+const makeAnnotations2019 = d3.annotation()
+  .annotations(annotations2019)
+
 
 var margin = {top: 100, right: 30, bottom: 30, left: 60},
     width = 800,
@@ -232,7 +296,7 @@ svg.append("g").attr("transform","translate(" + margin.left + "," + margin.top +
     })
     .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
 
-svg.append("g").call(makeAnnotations)
+svg.append("g").call(makeAnnotations2015)
 
 //legend dots
 svg.selectAll("dots")
@@ -284,6 +348,9 @@ function disp2015() {
             .html(d.Country + "<br/> Score: " + parseFloat(d['Happiness Score']).toFixed(2) + "<br/> GDP per Capita: " + parseFloat(d['Economy (GDP per Capita)']).toFixed(2));
     })
     .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
+
+    drawBracket1();
+    svg.append("g").call(makeAnnotations2015)
 }
 
 document.getElementById("2016").onclick = function() {disp2016()};
@@ -297,6 +364,7 @@ function disp2016() {
     document.getElementById("2018").style.background = "whitesmoke";
     document.getElementById("2019").style.background = "whitesmoke";
 
+    svg.selectAll("line").remove();
 
     svg.selectAll("circle").data(data2016)
     //.transition().duration(2000)
@@ -315,6 +383,8 @@ function disp2016() {
     })
     .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
 
+    d3.selectAll("g").filter(function(){return (d3.select(this).attr("class") == "annotations");}).html("");
+    svg.append("g").call(makeAnnotations2016)
 }
 
 document.getElementById("2017").onclick = function() {disp2017()};
@@ -328,6 +398,7 @@ function disp2017() {
     document.getElementById("2018").style.background = "whitesmoke";
     document.getElementById("2019").style.background = "whitesmoke";
 
+    svg.selectAll("line").remove();
 
     svg.selectAll("circle").data(data2017)
     //.transition().duration(2000)
@@ -346,12 +417,16 @@ function disp2017() {
     })
     .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
 
+    d3.selectAll("g").filter(function(){return (d3.select(this).attr("class") == "annotations");}).html("");
+    svg.append("g").call(makeAnnotations2017)
 }
 
 document.getElementById("2018").onclick = function() {disp2018()};
 
 function disp2018() {
     year = 2018;
+
+    svg.selectAll("line").remove();
 
     document.getElementById("2015").style.background = "whitesmoke";
     document.getElementById("2016").style.background = "whitesmoke";
@@ -377,6 +452,8 @@ function disp2018() {
     })
     .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
 
+    d3.selectAll("g").filter(function(){return (d3.select(this).attr("class") == "annotations");}).html("");
+    svg.append("g").call(makeAnnotations2018)
 }
 
 document.getElementById("2019").onclick = function() {disp2019()};
@@ -407,6 +484,9 @@ function disp2019() {
     })
     .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
 
+    d3.selectAll("g").filter(function(){return (d3.select(this).attr("class") == "annotations");}).html("");
+    drawBracket1();
+    svg.append("g").call(makeAnnotations2019)
 }
 
 document.getElementById("Next").onclick = function() {nextYear()};
