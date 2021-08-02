@@ -113,15 +113,17 @@ document.getElementById("Prev").style.background = "#f5f5d5";
 const annotations = [
   {
     note: {
-      label: "Here is the annotation label",
-      title: "Annotation title"
+      label: "There is a clear positive correlation between Happiness Score and GDP per capita",
+      //title: "Annotation title"
     },
-    x: 100,
-    y: 100,
+    x: 570,
+    y: 570,
     dy: 100,
     dx: 100
   }
 ]
+
+
 
 const makeAnnotations = d3.annotation()
   .annotations(annotations)
@@ -133,11 +135,38 @@ var margin = {top: 100, right: 30, bottom: 30, left: 60},
 
 var svg = d3.select("svg")
 
+function drawBracket1(){
+
+svg.append("line")
+    .attr("x1", 300)
+    .attr("y1", 850)
+    .attr("x2", 800)
+    .attr("y2", 330)
+    .attr("stroke", "#b0aeae");
+
+svg.append("line")
+    .attr("x1", 300)
+    .attr("y1", 850)
+    .attr("x2", 270)
+    .attr("y2", 820)
+    .attr("stroke", "#b0aeae");
+
+svg.append("line")
+    .attr("x1", 770)
+    .attr("y1", 300)
+    .attr("x2", 800)
+    .attr("y2", 330)
+    .attr("stroke", "#b0aeae");
+
+}
+
+drawBracket1();
+
 var div = d3.select("body").append("div")	
     .attr("class", "tooltip")				
     .style("opacity", 0);
 
-const regions = ['Western Europe', 'North America', 'Australia and New Zealand', 'Middle East and Northern Africa', 'Latin America and Caribbean', 'Southeastern Asia', 'Central and Eastern Europe','Eastern Asia', 'Sub-Saharan Africa']
+const regions = ['Western Europe', 'North America', 'Australia and New Zealand', 'Middle East and Northern Africa', 'Latin America and Caribbean', 'Southeastern Asia', 'Central and Eastern Europe','Eastern Asia', 'Sub-Saharan Africa', 'Southern Asia']
 
 var x = d3.scaleLinear().domain([0,2.15]).range([0,800]) 
 var y = d3.scaleLinear().domain([2,8]).range([800,0])
@@ -240,7 +269,7 @@ function disp2015() {
     document.getElementById("2019").style.background = "whitesmoke";
 
     svg.selectAll("circle").data(data2015)
-    .transition().duration(2000)
+    //.transition().duration(2000)
     .attr("cx", function (d) { return x(+d['Economy (GDP per Capita)']); } )
     .attr("cy", function (d) { return y(+d['Happiness Score']); } )
     .attr("fill", function (d) { return pcol(d.Region); })
@@ -270,7 +299,7 @@ function disp2016() {
 
 
     svg.selectAll("circle").data(data2016)
-    .transition().duration(2000)
+    //.transition().duration(2000)
     .attr("cx", function (d) { return x(+d['Economy (GDP per Capita)']); } )
     .attr("cy", function (d) { return y(+d['Happiness Score']); } )
     .attr("fill", function (d) { return pcol(d.Region); })
@@ -301,7 +330,7 @@ function disp2017() {
 
 
     svg.selectAll("circle").data(data2017)
-    .transition().duration(2000)
+    //.transition().duration(2000)
     .attr("cx", function (d) { return x(+d['Economy..GDP.per.Capita.']); } )
     .attr("cy", function (d) { return y(+d['Happiness.Score']); } )
     .attr("fill", function (d) { return pcol(d.Region); })
@@ -332,7 +361,7 @@ function disp2018() {
 
 
     svg.selectAll("circle").data(data2018)
-    .transition().duration(2000)
+    //.transition().duration(2000)
     .attr("cx", function (d) { return x(+d['GDP per capita']); } )
     .attr("cy", function (d) { return y(+d['Score']); } )
     .attr("fill", function (d) { return pcol(d.Region); })
@@ -362,7 +391,7 @@ function disp2019() {
     document.getElementById("2019").style.background = "#9df5f0";
 
     svg.selectAll("circle").data(data2019)
-    .transition().duration(2000)
+    //.transition().duration(2000)
     .attr("cx", function (d) { return x(+d['GDP per capita']); } )
     .attr("cy", function (d) { return y(+d['Score']); } )
     .attr("fill", function (d) { return pcol(d.Region); })
