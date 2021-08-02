@@ -32,6 +32,7 @@ div.tooltip {
         cursor: pointer;
         position: absolute;
         left: 100px;
+        background-color: whitesmoke;
     }
     .button2 {
         position: absolute;
@@ -48,6 +49,15 @@ div.tooltip {
     .button5 {
         position: absolute;
         left: 500px;
+    }
+    .button6 {
+        position: absolute;
+        left: 600px;
+    }
+
+    .button7 {
+        position: absolute;
+        left: 700px;
     }
 
     .header {
@@ -71,11 +81,14 @@ div.tooltip {
             impact on the total score reported for each country, but they may explain why some countries rank higher than others.</p>
 </div>
 
-<button class = "button" id = "2015">2015</button>
-<button class = "button button2" id = "2016">2016</button>
-<button class = "button button3" id = "2017">2017</button>
-<button class = "button button4" id = "2018">2018</button>
-<button class = "button button5" id = "2019">2019</button>
+<button class = "button" id = "Prev">Prev</button>
+<button class = "button button2" id = "2015">2015</button>
+<button class = "button button3" id = "2016">2016</button>
+<button class = "button button4" id = "2017">2017</button>
+<button class = "button button5" id = "2018">2018</button>
+<button class = "button button6" id = "2019">2019</button>
+<button class = "button button7" id = "Next">Next</button>
+
 
 <svg width=1500 height=1000>
 </svg>
@@ -88,6 +101,9 @@ const data2016 = await d3.csv('https://raw.githubusercontent.com/hughhhuang/hugh
 const data2017 = await d3.csv('https://raw.githubusercontent.com/hughhhuang/hughhhuang.github.io/main/world_happiness_data/2017.csv');
 const data2018 = await d3.csv('https://raw.githubusercontent.com/hughhhuang/hughhhuang.github.io/main/world_happiness_data/2018.csv');
 const data2019 = await d3.csv('https://raw.githubusercontent.com/hughhhuang/hughhhuang.github.io/main/world_happiness_data/2019.csv');
+
+var year = 2015;
+document.getElementById("2015").style.background = "#9df5f0";
 
 const annotations = [
   {
@@ -210,6 +226,13 @@ svg.selectAll("myLabels")
 document.getElementById("2015").onclick = function() {disp2015()};
 
 function disp2015() {
+    year = 2015;
+    
+    document.getElementById("2015").style.background = "#9df5f0";
+    document.getElementById("2016").style.background = "whitesmoke";
+    document.getElementById("2017").style.background = "whitesmoke";
+    document.getElementById("2018").style.background = "whitesmoke";
+    document.getElementById("2019").style.background = "whitesmoke";
 
     svg.selectAll("circle").data(data2015)
     .transition().duration(2000)
@@ -232,6 +255,15 @@ function disp2015() {
 document.getElementById("2016").onclick = function() {disp2016()};
 
 function disp2016() {
+    year = 2016;
+
+    document.getElementById("2015").style.background = "whitesmoke";
+    document.getElementById("2016").style.background = "#9df5f0";
+    document.getElementById("2017").style.background = "whitesmoke";
+    document.getElementById("2018").style.background = "whitesmoke";
+    document.getElementById("2019").style.background = "whitesmoke";
+
+
     svg.selectAll("circle").data(data2016)
     .transition().duration(2000)
     .attr("cx", function (d) { return x(+d['Economy (GDP per Capita)']); } )
@@ -254,6 +286,15 @@ function disp2016() {
 document.getElementById("2017").onclick = function() {disp2017()};
 
 function disp2017() {
+    year = 2017;
+
+    document.getElementById("2015").style.background = "whitesmoke";
+    document.getElementById("2016").style.background = "whitesmoke";
+    document.getElementById("2017").style.background = "#9df5f0";
+    document.getElementById("2018").style.background = "whitesmoke";
+    document.getElementById("2019").style.background = "whitesmoke";
+
+
     svg.selectAll("circle").data(data2017)
     .transition().duration(2000)
     .attr("cx", function (d) { return x(+d['Economy..GDP.per.Capita.']); } )
@@ -276,6 +317,14 @@ function disp2017() {
 document.getElementById("2018").onclick = function() {disp2018()};
 
 function disp2018() {
+    year = 2018;
+
+    document.getElementById("2015").style.background = "whitesmoke";
+    document.getElementById("2016").style.background = "whitesmoke";
+    document.getElementById("2017").style.background = "whitesmoke";
+    document.getElementById("2018").style.background = "#9df5f0";
+    document.getElementById("2019").style.background = "whitesmoke";
+
 
     svg.selectAll("circle").data(data2018)
     .transition().duration(2000)
@@ -299,6 +348,14 @@ function disp2018() {
 document.getElementById("2019").onclick = function() {disp2019()};
 
 function disp2019() {
+    year = 2019;
+
+    document.getElementById("2015").style.background = "whitesmoke";
+    document.getElementById("2016").style.background = "whitesmoke";
+    document.getElementById("2017").style.background = "whitesmoke";
+    document.getElementById("2018").style.background = "whitesmoke";
+    document.getElementById("2019").style.background = "#9df5f0";
+
     svg.selectAll("circle").data(data2019)
     .transition().duration(2000)
     .attr("cx", function (d) { return x(+d['GDP per capita']); } )
@@ -318,10 +375,51 @@ function disp2019() {
 
 }
 
+document.getElementById("Next").onclick = function() {nextYear()};
+
+function nextYear(){
+    if (year == 2015){
+        year = 2016;
+        disp2016();
+    }
+    else if (year == 2016){
+        year = 2017;
+        disp2017();
+    }
+    else if (year == 2017){
+        year = 2018;
+        disp2018();
+    }
+    else if (year == 2018){
+        year = 2019;
+        disp2019();
+    }
 
 }
 
+document.getElementById("Prev").onclick = function() {prevYear()};
 
+function prevYear(){
+    if (year == 2019){
+        year = 2018;
+        disp2018();
+    }
+    else if (year == 2016){
+        year = 2015;
+        disp2015();
+    }
+    else if (year == 2017){
+        year = 2016;
+        disp2016();
+    }
+    else if (year == 2018){
+        year = 2017;
+        disp2017();
+    }
+
+}
+
+}
 
 </script>
 </body>
