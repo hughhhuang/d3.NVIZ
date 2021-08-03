@@ -150,7 +150,8 @@ const annotations2016 = [
 ]
 
 const makeAnnotations2016 = d3.annotation()
-  .annotations(annotations2016);
+  .annotations(annotations2016)
+    
 
 
 const annotations2017 = [
@@ -336,13 +337,16 @@ function disp2015() {
     document.getElementById("2018").style.background = "whitesmoke";
     document.getElementById("2019").style.background = "whitesmoke";
 
-    svg.selectAll("circle").data(data2015)
-    //.transition().duration(2000)
+    svg.selectAll("circle").remove()
+
+    svg.append("g").attr("transform","translate(" + margin.left + "," + margin.top + ")").selectAll("circle")
+    .data(data2015)
+    .enter()
+    .append("circle")
     .attr("cx", function (d) { return x(+d['Economy (GDP per Capita)']); } )
     .attr("cy", function (d) { return y(+d['Happiness Score']); } )
     .attr("fill", function (d) { return pcol(d.Region); })
-
-    svg.selectAll("circle").data(data2015)
+    .attr("r", 7)
     .on('mouseover', function(d) {
         d3.select(this).moveToFront();
         div.style("opacity", 1)
@@ -353,7 +357,14 @@ function disp2015() {
     })
     .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
 
-    //d3.selectAll("g").filter(function(){return (d3.select(this).attr("class") == "annotations");}).html("");
+    svg.selectAll("dots")
+    .data(regions)
+    .enter()
+    .append("circle")
+        .attr("cx", width + margin.left + margin.right + 10)
+        .attr("cy", function(d,i) {return margin.top + i*25})
+        .attr("r", 7)
+        .style("fill", function(d,i){ return pcol(regions[i])})
     
     svg.append("g").call(makeAnnotations2015)
     
@@ -377,14 +388,18 @@ function disp2016() {
         rem2015 = true;
     }
 
+    svg.append("g").call(makeAnnotations2016)
 
-    svg.selectAll("circle").data(data2016)
-    //.transition().duration(2000)
+    svg.selectAll("circle").remove()
+
+    svg.append("g").attr("transform","translate(" + margin.left + "," + margin.top + ")").selectAll("circle")
+    .data(data2016)
+    .enter()
+    .append("circle")
     .attr("cx", function (d) { return x(+d['Economy (GDP per Capita)']); } )
     .attr("cy", function (d) { return y(+d['Happiness Score']); } )
+    .attr("r", 7)
     .attr("fill", function (d) { return pcol(d.Region); })
-    
-    svg.selectAll("circle").data(data2016)
     .on('mouseover', function(d) {
         d3.select(this).moveToFront();
         div.style("opacity", 1)
@@ -395,8 +410,15 @@ function disp2016() {
     })
     .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
 
+    svg.selectAll("dots")
+    .data(regions)
+    .enter()
+    .append("circle")
+        .attr("cx", width + margin.left + margin.right + 10)
+        .attr("cy", function(d,i) {return margin.top + i*25})
+        .attr("r", 7)
+        .style("fill", function(d,i){ return pcol(regions[i])})
     
-    svg.append("g").call(makeAnnotations2016)
 }
 
 document.getElementById("2017").onclick = function() {disp2017()};
@@ -416,13 +438,18 @@ function disp2017() {
         rem2015 = true;
     }
 
-    svg.selectAll("circle").data(data2017)
-    //.transition().duration(2000)
+    svg.append("g").call(makeAnnotations2017)
+
+    svg.selectAll("circle").remove()
+    
+    svg.append("g").attr("transform","translate(" + margin.left + "," + margin.top + ")").selectAll("circle")
+    .data(data2017)
+    .enter()
+    .append("circle")
     .attr("cx", function (d) { return x(+d['Economy..GDP.per.Capita.']); } )
     .attr("cy", function (d) { return y(+d['Happiness.Score']); } )
     .attr("fill", function (d) { return pcol(d.Region); })
-    
-    svg.selectAll("circle").data(data2017)
+    .attr("r", 7)
     .on('mouseover', function(d) {
         d3.select(this).moveToFront();
         div.style("opacity", 1)
@@ -433,7 +460,14 @@ function disp2017() {
     })
     .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
 
-    svg.append("g").call(makeAnnotations2017)
+    svg.selectAll("dots")
+    .data(regions)
+    .enter()
+    .append("circle")
+        .attr("cx", width + margin.left + margin.right + 10)
+        .attr("cy", function(d,i) {return margin.top + i*25})
+        .attr("r", 7)
+        .style("fill", function(d,i){ return pcol(regions[i])})
 }
 
 document.getElementById("2018").onclick = function() {disp2018()};
@@ -453,14 +487,19 @@ function disp2018() {
     document.getElementById("2018").style.background = "#9df5f0";
     document.getElementById("2019").style.background = "whitesmoke";
 
+    svg.append("g").call(makeAnnotations2018)
 
-    svg.selectAll("circle").data(data2018)
-    //.transition().duration(2000)
+    svg.selectAll("circle").remove()
+    
+    
+    svg.append("g").attr("transform","translate(" + margin.left + "," + margin.top + ")").selectAll("circle")
+    .data(data2018)
+    .enter()
+    .append("circle")
     .attr("cx", function (d) { return x(+d['GDP per capita']); } )
     .attr("cy", function (d) { return y(+d['Score']); } )
     .attr("fill", function (d) { return pcol(d.Region); })
-    
-    svg.selectAll("circle").data(data2018)
+    .attr("r", 7)
     .on('mouseover', function(d) {
         d3.select(this).moveToFront();
         div.style("opacity", 1)
@@ -471,7 +510,14 @@ function disp2018() {
     })
     .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
 
-    svg.append("g").call(makeAnnotations2018)
+    svg.selectAll("dots")
+    .data(regions)
+    .enter()
+    .append("circle")
+        .attr("cx", width + margin.left + margin.right + 10)
+        .attr("cy", function(d,i) {return margin.top + i*25})
+        .attr("r", 7)
+        .style("fill", function(d,i){ return pcol(regions[i])})
 }
 
 document.getElementById("2019").onclick = function() {disp2019()};
@@ -490,13 +536,17 @@ function disp2019() {
     document.getElementById("2018").style.background = "whitesmoke";
     document.getElementById("2019").style.background = "#9df5f0";
 
-    svg.selectAll("circle").data(data2019)
-    //.transition().duration(2000)
+    svg.selectAll("circle").remove()
+    
+    
+    svg.append("g").attr("transform","translate(" + margin.left + "," + margin.top + ")").selectAll("circle")
+    .data(data2019)
+    .enter()
+    .append("circle")
     .attr("cx", function (d) { return x(+d['GDP per capita']); } )
     .attr("cy", function (d) { return y(+d['Score']); } )
     .attr("fill", function (d) { return pcol(d.Region); })
-    
-    svg.selectAll("circle").data(data2019)
+    .attr("r", 7)
     .on('mouseover', function(d) {
         d3.select(this).moveToFront();
         div.style("opacity", 1)
@@ -507,7 +557,14 @@ function disp2019() {
     })
     .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
 
-    //svg.append("g").call(makeAnnotations2019)
+    svg.selectAll("dots")
+    .data(regions)
+    .enter()
+    .append("circle")
+        .attr("cx", width + margin.left + margin.right + 10)
+        .attr("cy", function(d,i) {return margin.top + i*25})
+        .attr("r", 7)
+        .style("fill", function(d,i){ return pcol(regions[i])})
 }
 
 document.getElementById("Next").onclick = function() {nextYear()};
