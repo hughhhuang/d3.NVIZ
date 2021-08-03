@@ -63,7 +63,7 @@ div.tooltip {
 
     .button8 {
         position: absolute;
-        top: 420px;
+        top: 475px;
         left: 750px;
         padding: 10px 15px;
     }
@@ -79,6 +79,7 @@ div.tooltip {
 
 <div class="header">
         <h1>World Happiness Report 2015 - 2019</h1>
+        <h2>(Happiness vs GDP per capita)</h2>
         <p> This interactive slideshow displays the happiness scores vs GDP per capita for the countries reported in the 2015 to 2019 World Happiness Reports. 
             These reports were created by the UN Sustainable Development Solutions Network and also use data from the 
             Gallup World Poll surveys. The report ranks 155 countries by their happiness levels. The happiness scores are 
@@ -94,7 +95,9 @@ div.tooltip {
 
         <p>Navigate through the slideshow with Next/Prev buttons or by clicking on the button for a specifc year.</p>
 
-        <p>*Optional: declutter the plot by clicking on the button to remove annotations (permanently).</p>
+        <p>*Optional: declutter the plot by clicking on the button to remove annotations *permanently*</p>
+
+        
 </div>
 
 
@@ -637,5 +640,6 @@ document.getElementById("RemAnn").onclick = function() {d3.selectAll("g").filter
 }
 
 </script>
+<p>The dataset used for this visualization can be found at <a href="https://www.kaggle.com/unsdsn/world-happiness">https://www.kaggle.com/unsdsn/world-happiness</a>.</p>
 </body>
 </html>
