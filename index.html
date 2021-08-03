@@ -8,6 +8,7 @@
 <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
 
 <style> 
+
 div.tooltip {
     opacity: 0;
     position: absolute;
@@ -60,10 +61,18 @@ div.tooltip {
         left: 550px;
     }
 
+    .button8 {
+        position: absolute;
+        top: 420px;
+        left: 750px;
+        padding: 10px 15px;
+    }
+
     .header {
         padding: 20px;
-        text-align: center;
+        text-align: left;
         font-size: 20px;
+        
     }
 </style>
 <body onload='init()'>
@@ -80,7 +89,15 @@ div.tooltip {
             impact on the total score reported for each country, but they may explain why some countries rank higher than others. This visualization focuses on 
             the correlation between happiness score and GDP per capita.
             </p>
+
+        <p>Hover on a point to see which country it represents and its exact happiness score and GDP per Capita</p>
+
+        <p>Navigate through the slideshow with Next/Prev buttons or by clicking on the button for a specifc year.</p>
+
+        <p>*Optional: declutter the plot by clicking on the button to remove annotations (permanently).</p>
 </div>
+
+
 
 <button class = "button" id = "Prev">Prev</button>
 <button class = "button button2" id = "2015">2015</button>
@@ -89,6 +106,7 @@ div.tooltip {
 <button class = "button button5" id = "2018">2018</button>
 <button class = "button button6" id = "2019">2019</button>
 <button class = "button button7" id = "Next">Next</button>
+<button class = "button button8" id = "RemAnn">Remove Annotations</button>
 
 
 <svg width=1500 height=1000>
@@ -525,6 +543,7 @@ document.getElementById("2019").onclick = function() {disp2019()};
 function disp2019() {
     year = 2019;
 
+    svg.selectAll("line").remove();
     if (rem2015 == false){
         d3.selectAll("g").filter(function(){return (d3.select(this).attr("class") == "annotations");}).html("");
         rem2015 = true;
@@ -610,6 +629,10 @@ function prevYear(){
     }
 
 }
+
+document.getElementById("RemAnn").onclick = function() {d3.selectAll("g").filter(function(){
+    svg.selectAll("line").remove();
+    return (d3.select(this).attr("class") == "annotations");}).html("");};
 
 }
 
