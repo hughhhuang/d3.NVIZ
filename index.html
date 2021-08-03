@@ -70,15 +70,16 @@ div.tooltip {
 
 <div class="header">
         <h1>World Happiness Report 2015 - 2019</h1>
-        <p>The World Happiness Report is a landmark survey of the state of global happiness. 
-            The report ranks 155 countries by their happiness levels. The happiness scores and rankings use data from the Gallup World Poll.
-            The scores are based on answers to the main life evaluation question asked in the poll. 
-            This question, known as the Cantril ladder, asks respondents to think of a ladder with the 
-            best possible life for them being a 10 and the worst possible life being a 0 and to rate their 
-            own current lives on that scale. The columns following the happiness score estimate the extent to 
-            which each of six factors – economic production, social support, life expectancy, freedom, 
-            absence of corruption, and generosity – contribute to making life evaluations. They have no 
-            impact on the total score reported for each country, but they may explain why some countries rank higher than others.</p>
+        <p> This interactive slideshow displays the happiness scores vs GDP per capita for the countries reported in the 2015 to 2019 World Happiness Reports. 
+            These reports were created by the UN Sustainable Development Solutions Network and also use data from the 
+            Gallup World Poll surveys. The report ranks 155 countries by their happiness levels. The happiness scores are 
+            derived from a life evaluation question that asks respondents to think of a ladder (AKA the Cantril Ladder), with the best possible life for 
+            them being a 10, and the worst possible life being a 0, and they are then asked to rate their own current lives on that 0 to 10 scale. 
+            The report also shows data on six factors that may correlate with a country’s happiness score, these factors being GDP per capita, 
+            life expectancy, generosity, social support, freedom, and government corruption. They have no 
+            impact on the total score reported for each country, but they may explain why some countries rank higher than others. This visualization focuses on 
+            the correlation between happiness score and GDP per capita.
+            </p>
 </div>
 
 <button class = "button" id = "Prev">Prev</button>
@@ -103,6 +104,7 @@ const data2018 = await d3.csv('https://raw.githubusercontent.com/hughhhuang/hugh
 const data2019 = await d3.csv('https://raw.githubusercontent.com/hughhhuang/hughhhuang.github.io/main/world_happiness_data/2019.csv');
 
 var year = 2015;
+var rem2015 = false;
 
 document.getElementById("2015").style.background = "#9df5f0";
 document.getElementById("Next").style.color = "#242536";
@@ -112,6 +114,7 @@ document.getElementById("Prev").style.background = "#f5f5d5";
 
 const annotations2015 = [
   {
+    id: "2015ann",
     note: {
       label: "There is a clear positive correlation between Happiness Score and GDP per capita",
       //title: "Annotation title"
@@ -126,16 +129,23 @@ const annotations2015 = [
 const makeAnnotations2015 = d3.annotation()
   .annotations(annotations2015)
 
+
+
 const annotations2016 = [
   {
+    id: "2016ann",
+    type: d3.annotationCalloutCircle,
     note: {
       label: "Countries in Sub-Saharan Africa, Southeastern Asia, and Southern Asia consistently have lower GDP per capita and lower Happiness Scores than other regions",
       //title: "Annotation title"
     },
-    x: 300,
-    y: 600,
-    dy: 100,
-    dx: 100
+    subject: {
+        radius: 225
+    },
+    x: 250,
+    y: 620,
+    dy: 80,
+    dx: 225
   }
 ]
 
@@ -145,14 +155,19 @@ const makeAnnotations2016 = d3.annotation()
 
 const annotations2017 = [
   {
+    id: "2017ann",
+    type: d3.annotationCalloutCircle,
     note: {
       label: "In the middle are Latin America and the Caribbean, Central and Eastern Europe, and some countries from the Middle East and North Africa",
       //title: "Annotation title"
     },
+    subject: {
+        radius: 200
+    },
     x: 470,
-    y: 470,
-    dy: 100,
-    dx: 100
+    y: 440,
+    dy: 170,
+    dx: 170
   }
 ]
 
@@ -161,35 +176,24 @@ const makeAnnotations2017 = d3.annotation()
 
 const annotations2018 = [
   {
+    id: "2018ann",
+    type: d3.annotationCalloutCircle,
     note: {
       label: "At the top are Western Europe, North America, Australia and New Zealand, and Eastern Asian countries.",
       //title: "Annotation title"
     },
+    subject: {
+        radius: 200
+    },
     x: 600,
     y: 320,
-    dy: 120,
-    dx: 120
+    dy: 170,
+    dx: 170
   }
 ]
 
 const makeAnnotations2018 = d3.annotation()
   .annotations(annotations2018)
-
-const annotations2019 = [
-  {
-    note: {
-      label: "From 2015 to 2019, the distribution of regions across this plot stays relatively the same",
-      //title: "Annotation title"
-    },
-    x: 570,
-    y: 570,
-    dy: 100,
-    dx: 100
-  }
-]
-
-const makeAnnotations2019 = d3.annotation()
-  .annotations(annotations2019)
 
 
 var margin = {top: 100, right: 30, bottom: 30, left: 60},
@@ -349,8 +353,11 @@ function disp2015() {
     })
     .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
 
-    drawBracket1();
+    //d3.selectAll("g").filter(function(){return (d3.select(this).attr("class") == "annotations");}).html("");
+    
     svg.append("g").call(makeAnnotations2015)
+    
+    
 }
 
 document.getElementById("2016").onclick = function() {disp2016()};
@@ -365,6 +372,11 @@ function disp2016() {
     document.getElementById("2019").style.background = "whitesmoke";
 
     svg.selectAll("line").remove();
+    if (rem2015 == false){
+        d3.selectAll("g").filter(function(){return (d3.select(this).attr("class") == "annotations");}).html("");
+        rem2015 = true;
+    }
+
 
     svg.selectAll("circle").data(data2016)
     //.transition().duration(2000)
@@ -383,7 +395,7 @@ function disp2016() {
     })
     .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
 
-    d3.selectAll("g").filter(function(){return (d3.select(this).attr("class") == "annotations");}).html("");
+    
     svg.append("g").call(makeAnnotations2016)
 }
 
@@ -399,6 +411,10 @@ function disp2017() {
     document.getElementById("2019").style.background = "whitesmoke";
 
     svg.selectAll("line").remove();
+    if (rem2015 == false){
+        d3.selectAll("g").filter(function(){return (d3.select(this).attr("class") == "annotations");}).html("");
+        rem2015 = true;
+    }
 
     svg.selectAll("circle").data(data2017)
     //.transition().duration(2000)
@@ -417,7 +433,6 @@ function disp2017() {
     })
     .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
 
-    d3.selectAll("g").filter(function(){return (d3.select(this).attr("class") == "annotations");}).html("");
     svg.append("g").call(makeAnnotations2017)
 }
 
@@ -427,6 +442,10 @@ function disp2018() {
     year = 2018;
 
     svg.selectAll("line").remove();
+    if (rem2015 == false){
+        d3.selectAll("g").filter(function(){return (d3.select(this).attr("class") == "annotations");}).html("");
+        rem2015 = true;
+    }
 
     document.getElementById("2015").style.background = "whitesmoke";
     document.getElementById("2016").style.background = "whitesmoke";
@@ -452,7 +471,6 @@ function disp2018() {
     })
     .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
 
-    d3.selectAll("g").filter(function(){return (d3.select(this).attr("class") == "annotations");}).html("");
     svg.append("g").call(makeAnnotations2018)
 }
 
@@ -460,6 +478,11 @@ document.getElementById("2019").onclick = function() {disp2019()};
 
 function disp2019() {
     year = 2019;
+
+    if (rem2015 == false){
+        d3.selectAll("g").filter(function(){return (d3.select(this).attr("class") == "annotations");}).html("");
+        rem2015 = true;
+    }
 
     document.getElementById("2015").style.background = "whitesmoke";
     document.getElementById("2016").style.background = "whitesmoke";
@@ -484,9 +507,7 @@ function disp2019() {
     })
     .on("mouseout", function() { div.style("opacity", 0).style("width", "0px").html('');})
 
-    d3.selectAll("g").filter(function(){return (d3.select(this).attr("class") == "annotations");}).html("");
-    drawBracket1();
-    svg.append("g").call(makeAnnotations2019)
+    //svg.append("g").call(makeAnnotations2019)
 }
 
 document.getElementById("Next").onclick = function() {nextYear()};
